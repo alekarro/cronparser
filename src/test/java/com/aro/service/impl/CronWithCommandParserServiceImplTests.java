@@ -41,27 +41,27 @@ public class CronWithCommandParserServiceImplTests {
         WrongCronException exception = assertThrows(WrongCronException.class, () ->
                 service.parseField("97", CronWithCommandFieldsEnum.MINUTE)
         );
-        assertEquals("WrongCronException: cron is wrong =97; field =CronFieldsEnum{label='minute', startNumber=0, endNumber=59}", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, incorrect field value = 97; field = CronWithCommandFieldsEnum {label='minute', minValue=0, maxValue=59}", exception.getMessage());
 
         exception = assertThrows(WrongCronException.class, () ->
                 service.parseField("1,24", CronWithCommandFieldsEnum.HOUR)
         );
-        assertEquals("WrongCronException: cron is wrong =1,24; field =CronFieldsEnum{label='hour', startNumber=0, endNumber=23}", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, incorrect field value = 1,24; field = CronWithCommandFieldsEnum {label='hour', minValue=0, maxValue=23}", exception.getMessage());
 
         exception = assertThrows(WrongCronException.class, () ->
                 service.parseField("0-6", CronWithCommandFieldsEnum.DAY_OF_WEEK)
         );
-        assertEquals("WrongCronException: cron is wrong =0-6; field =CronFieldsEnum{label='day of week', startNumber=1, endNumber=7}", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, incorrect field value = 0-6; field = CronWithCommandFieldsEnum {label='day of week', minValue=1, maxValue=7}", exception.getMessage());
 
         exception = assertThrows(WrongCronException.class, () ->
                 service.parseField("13/1", CronWithCommandFieldsEnum.MONTH)
         );
-        assertEquals("WrongCronException: cron is wrong =13/1; field =CronFieldsEnum{label='month', startNumber=1, endNumber=12}", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, incorrect field value = 13/1; field = CronWithCommandFieldsEnum {label='month', minValue=1, maxValue=12}", exception.getMessage());
 
         exception = assertThrows(WrongCronException.class, () ->
                 service.parseField("28,,44", CronWithCommandFieldsEnum.MINUTE)
         );
-        assertEquals("WrongCronException: cron is wrong =28,,44; field =CronFieldsEnum{label='minute', startNumber=0, endNumber=59}", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, incorrect field value = 28,,44; field = CronWithCommandFieldsEnum {label='minute', minValue=0, maxValue=59}", exception.getMessage());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class CronWithCommandParserServiceImplTests {
         WrongCronException exception = assertThrows(WrongCronException.class, () ->
                 service.parse("*/15 17 1,3,15 7-13 * /usr/bin/find")
         );
-        assertEquals("WrongCronException: cron is wrong =7-13; field =CronFieldsEnum{label='month', startNumber=1, endNumber=12}", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, incorrect field value = 7-13; field = CronWithCommandFieldsEnum {label='month', minValue=1, maxValue=12}", exception.getMessage());
     }
 
 }

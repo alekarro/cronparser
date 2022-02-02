@@ -48,7 +48,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
             group = matcher.group(4);
             if (group != null) {
                 return String.join(SPACE,
-                        () -> IntStream.rangeClosed(fieldEnum.getStartNumber(), fieldEnum.getEndNumber()).
+                        () -> IntStream.rangeClosed(fieldEnum.getMinValue(), fieldEnum.getMaxValue()).
                                 mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
             }
 
@@ -56,7 +56,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
             group = matcher.group(5);
             if (group != null) {
                 int num = Integer.parseInt(cronField);
-                if (num < fieldEnum.getStartNumber() || num > fieldEnum.getEndNumber()) {
+                if (num < fieldEnum.getMinValue() || num > fieldEnum.getMaxValue()) {
                     throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
                 }
                 return cronField;
@@ -70,16 +70,16 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
         String[] arr = group.split(SLASH);
         final int start;
         if (ASTERISK.equals(arr[0])) {
-            start = fieldEnum.getStartNumber();
+            start = fieldEnum.getMinValue();
         } else {
             start = Integer.parseInt(arr[0]);
         }
-        if (start < fieldEnum.getStartNumber() || start > fieldEnum.getEndNumber()) {
+        if (start < fieldEnum.getMinValue() || start > fieldEnum.getMaxValue()) {
             throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
         }
         final int step = Integer.parseInt(arr[1]);
         return String.join(SPACE,
-                () -> IntStream.rangeClosed(start, fieldEnum.getEndNumber()).
+                () -> IntStream.rangeClosed(start, fieldEnum.getMaxValue()).
                         filter(n -> (n - start) % step == 0).
                         mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
     }
@@ -88,7 +88,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
         String[] arr = group.split(DASH);
         final int start = Integer.parseInt(arr[0]);
         final int end = Integer.parseInt(arr[1]);
-        if (start < fieldEnum.getStartNumber() || end > fieldEnum.getEndNumber()) {
+        if (start < fieldEnum.getMinValue() || end > fieldEnum.getMaxValue()) {
             throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
         }
 
@@ -106,7 +106,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
             } catch (NumberFormatException e) {
                 throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
             }
-            if (num < fieldEnum.getStartNumber() || num > fieldEnum.getEndNumber()) {
+            if (num < fieldEnum.getMinValue() || num > fieldEnum.getMaxValue()) {
                 throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
             }
         }
@@ -114,7 +114,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
     }
 
     private String createExceptionMessage(String cronField, CronWithCommandFieldsEnum fieldEnum) {
-        return "WrongCronException: cron is wrong =" + cronField + "; field =" + fieldEnum.toString();
+        return "WrongCronException: cron is wrong, incorrect field value = " + cronField + "; field = " + fieldEnum.toString();
     }
 
 

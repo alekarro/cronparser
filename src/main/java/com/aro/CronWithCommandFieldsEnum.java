@@ -12,34 +12,34 @@ public enum CronWithCommandFieldsEnum {
         this.label = label;
     }
 
-    CronWithCommandFieldsEnum(String label, int startNumber, int endNumber) {
+    CronWithCommandFieldsEnum(String label, int minValue, int maxValue) {
         this.label = label;
-        this.startNumber = startNumber;
-        this.endNumber = endNumber;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
     }
 
     private String label;
-    private int startNumber;
-    private int endNumber;
+    private int minValue;
+    private int maxValue;
 
     public String getLabel() {
         return label;
     }
 
-    public int getStartNumber() {
-        return startNumber;
+    public int getMinValue() {
+        return minValue;
     }
 
-    public int getEndNumber() {
-        return endNumber;
+    public int getMaxValue() {
+        return maxValue;
     }
 
     @Override
     public String toString() {
-        return "CronFieldsEnum{" +
-                "label='" + label + '\'' +
-                ", startNumber=" + startNumber +
-                ", endNumber=" + endNumber +
-                '}';
+        return "CronWithCommandFieldsEnum {" +
+            "label='" + label + '\'' +
+            ", minValue=" + minValue +
+            ", maxValue=" + maxValue +
+            '}';
     }
 }
