@@ -25,21 +25,19 @@ __________________________________________________________________________
  
  
 
-#### Running the example
+#### Build and run the jar
 
 This project uses the Maven to build the target jar.
  Requirements to build the jar:
+   - Git(any version) must be installed and on the path.  
    - JDK(minimum 1.8) must be installed and on the path.
-   - Maven must be installed and on the path. 
+   - Maven(any version) must be installed and on the path. 
  
-To build the jar, in the root of this project, run:
-  
-  $ `mvn clean compile jar:jar`
-
-To run the jar, in the root of this project, run:
-  
-   $ `java -jar target/expandedcron-1.0.jar "*/15 17 1,3,15 7-12 * /usr/bin/find"`
-
+To build and run the jar from command line:
+   1. clone project using following command    `git clone https://github.com/alerro/cronparser.git `
+   2. in the root of this project, run command `mvn clean compile jar:jar`
+   3. in the root of this project, run jar using command `java -jar target/expandedcron-1.0.jar "*/15 17 1,3,15 7-12 * /usr/bin/find"`
+   
    where "*/15 17 1,3,15 7-12 * /usr/bin/find" is a parameter, cron expression
    
    
