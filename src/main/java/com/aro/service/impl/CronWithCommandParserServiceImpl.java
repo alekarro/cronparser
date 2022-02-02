@@ -69,15 +69,14 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
     private String expandSlash(String cronField, CronWithCommandFieldsEnum fieldEnum, String group) throws WrongCronException {
         String[] arr = group.split(SLASH);
         final int start;
-        if (!ASTERISK.equals(arr[0])) {
-            start = Integer.parseInt(arr[0]);
+        if (ASTERISK.equals(arr[0])) {
+            start = fieldEnum.getStartNumber();
         } else {
-            start = 0;
+            start = Integer.parseInt(arr[0]);
         }
         if (start < fieldEnum.getStartNumber() || start > fieldEnum.getEndNumber()) {
             throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
         }
-
         final int step = Integer.parseInt(arr[1]);
         return String.join(SPACE,
                 () -> IntStream.rangeClosed(start, fieldEnum.getEndNumber()).
