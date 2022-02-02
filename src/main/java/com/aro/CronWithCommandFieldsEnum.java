@@ -36,7 +36,7 @@ public enum CronWithCommandFieldsEnum {
 
     @Override
     public String toString() {
-        return "CronWithCommandFieldsEnum {" +
+        return "{" +
             "label='" + label + '\'' +
             ", minValue=" + minValue +
             ", maxValue=" + maxValue +

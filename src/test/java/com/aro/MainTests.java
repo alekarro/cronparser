@@ -44,7 +44,7 @@ public class MainTests {
         final String[] args = {"*/15 17 0,3,15 7-12 * /usr/bin/find"};
         Main.main(args);
         final String content = outContent.toString();
-        assertTrue(content.contains("WrongCronException: cron is wrong, incorrect field value = 0,3,15; field = CronWithCommandFieldsEnum {label='day of month', minValue=1, maxValue=31}"));
+        assertTrue(content.contains("WrongCronException: cron is wrong, incorrect field value = 0,3,15; field = {label='day of month', minValue=1, maxValue=31}"));
     }
 
 }

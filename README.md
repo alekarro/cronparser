@@ -53,7 +53,7 @@ command**
 and you do not need to pass the special time strings such as "@yearly" or JAN, FEB or SUN or MON. 
 
 If the cron expression is wrong then exception will be displayed, like 
-`WrongCronException: cron is wrong, incorrect field value = 0,3,15; field = CronWithCommandFieldsEnum {label='day of month', minValue=1, maxValue=31}`
+`WrongCronException: cron is wrong, incorrect field value = 0,3,15; field = {label='day of month', minValue=1, maxValue=31}`
 
 
 For all questions feel free to contact me at alero@op.pl.
