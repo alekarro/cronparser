@@ -19,8 +19,8 @@ public enum CronWithCommandFieldsEnum {
     }
 
     private String label;
-    private int startNumber = -1;
-    private int endNumber = -1;
+    private int startNumber;
+    private int endNumber;
 
     public String getLabel() {
         return label;

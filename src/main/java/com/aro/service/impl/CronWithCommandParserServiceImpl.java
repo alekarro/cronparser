@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-public class ExpandedCronWithCommandParserServiceImpl implements CronParserService {
+public class CronWithCommandParserServiceImpl implements CronParserService {
     private final static Pattern CRON_PATTERN = Pattern.compile("(\\d+,[\\d,]*)*(\\d+-\\d+)*([\\d*]+/\\d+)*([*]+)*(\\d+)*");
 
     private final static String SPACE = " ";

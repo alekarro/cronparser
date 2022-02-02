@@ -10,13 +10,13 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class ExpandedCronWithCommandParserServiceImplTests {
-    private ExpandedCronWithCommandParserServiceImpl service;
+public class CronWithCommandParserServiceImplTests {
+    private CronWithCommandParserServiceImpl service;
 
 
     @Before
     public void init() {
-        service = new ExpandedCronWithCommandParserServiceImpl();
+        service = new CronWithCommandParserServiceImpl();
     }
 
     @Test
