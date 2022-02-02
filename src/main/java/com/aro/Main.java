@@ -6,6 +6,7 @@ import com.aro.service.impl.CronWithCommandParserServiceImpl;
 import java.util.Map;
 
 public class Main {
+    private final static int FIELD_COLUMN_SIZE = 14;
 
     private final CronParserService cronParserService = new CronWithCommandParserServiceImpl();
 
@@ -17,7 +18,7 @@ public class Main {
     private void expandAndOutputCron(final String cron) {
         try {
             final Map<String, String> resultMap = cronParserService.parse(cron);
-            resultMap.forEach((key, value) -> System.out.println(padRight(key, 20) + value));
+            resultMap.forEach((key, value) -> System.out.println(padRight(key, FIELD_COLUMN_SIZE) + value));
         } catch (WrongCronException e) {
             System.out.println(e.getMessage());
         }
