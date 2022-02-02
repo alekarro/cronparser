@@ -101,7 +101,12 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
         final String result = group.replace(COMMA, SPACE);
         final String[] arr = result.split("\\s");
         for (String s : arr) {
-            int num = Integer.parseInt(s);
+            int num;
+            try {
+                num = Integer.parseInt(s);
+            } catch (NumberFormatException e) {
+                throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
+            }
             if (num < fieldEnum.getStartNumber() || num > fieldEnum.getEndNumber()) {
                 throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
             }

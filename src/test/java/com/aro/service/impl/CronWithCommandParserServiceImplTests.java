@@ -55,6 +55,10 @@ public class CronWithCommandParserServiceImplTests {
         );
         assertEquals("WrongCronException: cron is wrong =13/1; field =CronFieldsEnum{label='month', startNumber=1, endNumber=12}", exception.getMessage());
 
+        exception = assertThrows(WrongCronException.class, () ->
+                service.parseField("28,,44", CronWithCommandFieldsEnum.MINUTE)
+        );
+        assertEquals("WrongCronException: cron is wrong =28,,44; field =CronFieldsEnum{label='minute', startNumber=0, endNumber=59}", exception.getMessage());
     }
 
     @Test
