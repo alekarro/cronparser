@@ -5,25 +5,27 @@ Java command line application that outputs to console the expanded values for cr
 For example, the following input argument: 
 
 
-*/15 0 1,15 * 1-5 /usr/bin/find 
+`*/15 0 1,15 * 1-5 /usr/bin/find `
  
 Should yield the following output: 
 
-minute        0 15 30 45
+__________________________________________________________________________
+**minute**        `0 15 30 45`
  
-hour          0
+**hour**          `0`
  
-day of month  1 15
+**day of month**  `1 15`
  
-month         1 2 3 4 5 6 7 8 9 10 11 12
+**month**         `1 2 3 4 5 6 7 8 9 10 11 12`
  
-day of week   1 2 3 4 5
+**day of week**   `1 2 3 4 5`
  
-command       /usr/bin/find
+**command**       `/usr/bin/find`
+__________________________________________________________________________
  
  
 
-##### Running the example
+#### Running the example
 
 This project uses the Maven to build the target jar.
  Requirements to build the jar:
@@ -32,16 +34,17 @@ This project uses the Maven to build the target jar.
  
 To build the jar, in the root of this project, run:
   
-  ###### $ mvn clean compile jar:jar** 
+  $ `mvn clean compile jar:jar`
 
 To run the jar, in the root of this project, run:
   
-   ###### $ java -jar target/expandedcron-1.0.jar "*/15 17 1,3,15 7-12 * /usr/bin/find"
-  
-    where "*/15 17 1,3,15 7-12 * /usr/bin/find" is a parameter, cron expression 
+   $ `java -jar target/expandedcron-1.0.jar "*/15 17 1,3,15 7-12 * /usr/bin/find"`
 
-##### Parameters
-You should only consider the standard cron format with five time fields and command field (
+   where "*/15 17 1,3,15 7-12 * /usr/bin/find" is a parameter, cron expression
+   
+   
+##### Cron expression
+You should only consider the standard cron format with five time fields and command field:
 **minute, 
 hour, 
 day of month, 
@@ -49,7 +52,7 @@ month,
 day of week, 
 command**
 
-and you do not need to pass the special time strings such as "@yearly". The input will be on a single line. 
+and you do not need to pass the special time strings such as "@yearly" or JAN, FEB or SUN or MON. 
 
 
 For all questions feel free to contact me at alero@op.pl.
