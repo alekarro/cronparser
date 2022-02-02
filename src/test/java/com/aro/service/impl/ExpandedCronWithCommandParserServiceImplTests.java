@@ -20,7 +20,7 @@ public class ExpandedCronWithCommandParserServiceImplTests {
     }
 
     @Test
-    public void testParseField_success () throws WrongCronException {
+    public void testParseField_success() throws WrongCronException {
         assertEquals("17", service.parseField("17", CronWithCommandFieldsEnum.MINUTE));
         assertEquals("28 39 44", service.parseField("28,39,44", CronWithCommandFieldsEnum.MINUTE));
         assertEquals("17 18 19 20 21", service.parseField("17-21", CronWithCommandFieldsEnum.HOUR));
@@ -34,9 +34,9 @@ public class ExpandedCronWithCommandParserServiceImplTests {
     }
 
     @Test
-    public void testParseField_exception ()  {
+    public void testParseField_exception() {
         WrongCronException exception = assertThrows(WrongCronException.class, () ->
-            service.parseField("97", CronWithCommandFieldsEnum.MINUTE)
+                service.parseField("97", CronWithCommandFieldsEnum.MINUTE)
         );
         assertEquals("WrongCronException: cron is wrong =97; field =CronFieldsEnum{label='minute', startNumber=0, endNumber=59}", exception.getMessage());
 
@@ -58,8 +58,8 @@ public class ExpandedCronWithCommandParserServiceImplTests {
     }
 
     @Test
-    public void testParse_success () throws WrongCronException {
-        final Map<String,String> resultMap = service.parse("*/15 17 1,3,15 7-12 * /usr/bin/find");
+    public void testParse_success() throws WrongCronException {
+        final Map<String, String> resultMap = service.parse("*/15 17 1,3,15 7-12 * /usr/bin/find");
         assertEquals("0 15 30 45", resultMap.get(CronWithCommandFieldsEnum.MINUTE.getLabel()));
         assertEquals("17", resultMap.get(CronWithCommandFieldsEnum.HOUR.getLabel()));
         assertEquals("1 3 15", resultMap.get(CronWithCommandFieldsEnum.DAY_OF_MONTH.getLabel()));
@@ -69,7 +69,7 @@ public class ExpandedCronWithCommandParserServiceImplTests {
     }
 
     @Test
-    public void testParse_exception () {
+    public void testParse_exception() {
         WrongCronException exception = assertThrows(WrongCronException.class, () ->
                 service.parse("*/15 17 1,3,15 7-13 * /usr/bin/find")
         );

@@ -27,7 +27,7 @@ public class MainTests {
     }
 
     @Test
-    public void testMain_success () {
+    public void testMain_success() {
         final String[] args = {"*/15 17 1,3,15 7-12 * /usr/bin/find"};
         Main.main(args);
         final String content = outContent.toString();
@@ -40,7 +40,7 @@ public class MainTests {
     }
 
     @Test
-    public void testMain_exception () {
+    public void testMain_exception() {
         final String[] args = {"*/15 17 0,3,15 7-12 * /usr/bin/find"};
         Main.main(args);
         final String content = outContent.toString();

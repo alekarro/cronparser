@@ -25,7 +25,7 @@ public class ExpandedCronWithCommandParserServiceImpl implements CronParserServi
 
         final Matcher matcher = CRON_PATTERN.matcher(cronField);
 
-        if(matcher.find()) {
+        if (matcher.find()) {
             //numbers separated by commas
             String group = matcher.group(1);
             if (group != null) {
@@ -48,15 +48,15 @@ public class ExpandedCronWithCommandParserServiceImpl implements CronParserServi
             group = matcher.group(4);
             if (group != null) {
                 return String.join(SPACE,
-                    () -> IntStream.rangeClosed(fieldEnum.getStartNumber(), fieldEnum.getEndNumber()).
-                    mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
+                        () -> IntStream.rangeClosed(fieldEnum.getStartNumber(), fieldEnum.getEndNumber()).
+                                mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
             }
 
             //single value
             group = matcher.group(5);
             if (group != null) {
                 int num = Integer.parseInt(cronField);
-                if(num < fieldEnum.getStartNumber() || num > fieldEnum.getEndNumber()) {
+                if (num < fieldEnum.getStartNumber() || num > fieldEnum.getEndNumber()) {
                     throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
                 }
                 return cronField;
@@ -69,7 +69,7 @@ public class ExpandedCronWithCommandParserServiceImpl implements CronParserServi
     private String expandSlash(String cronField, CronWithCommandFieldsEnum fieldEnum, String group) throws WrongCronException {
         String[] arr = group.split(SLASH);
         final int start;
-        if (!ASTERISK.equals(arr[0])){
+        if (!ASTERISK.equals(arr[0])) {
             start = Integer.parseInt(arr[0]);
         } else {
             start = 0;
@@ -81,7 +81,7 @@ public class ExpandedCronWithCommandParserServiceImpl implements CronParserServi
         final int step = Integer.parseInt(arr[1]);
         return String.join(SPACE,
                 () -> IntStream.rangeClosed(start, fieldEnum.getEndNumber()).
-                        filter(n -> (n-start) % step == 0).
+                        filter(n -> (n - start) % step == 0).
                         mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
     }
 
@@ -93,14 +93,14 @@ public class ExpandedCronWithCommandParserServiceImpl implements CronParserServi
             throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
         }
 
-        return String.join(SPACE,() -> IntStream.rangeClosed(start, end).
+        return String.join(SPACE, () -> IntStream.rangeClosed(start, end).
                 mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
     }
 
     private String expandComma(String cronField, CronWithCommandFieldsEnum fieldEnum, String group) throws WrongCronException {
         final String result = group.replace(COMMA, SPACE);
         final String[] arr = result.split("\\s");
-        for(String s  : arr) {
+        for (String s : arr) {
             int num = Integer.parseInt(s);
             if (num < fieldEnum.getStartNumber() || num > fieldEnum.getEndNumber()) {
                 throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
@@ -109,7 +109,7 @@ public class ExpandedCronWithCommandParserServiceImpl implements CronParserServi
         return result;
     }
 
-    private String createExceptionMessage(String cronField, CronWithCommandFieldsEnum fieldEnum){
+    private String createExceptionMessage(String cronField, CronWithCommandFieldsEnum fieldEnum) {
         return "WrongCronException: cron is wrong =" + cronField + "; field =" + fieldEnum.toString();
     }
 
