@@ -59,17 +59,15 @@ public class CommandCronParser implements CronParser {
             }
 
             //asterisk, just *
-            group = matcher.group(4);
-            if (group != null) {
+            if (matcher.group(4) != null) {
                 return String.join(SPACE,
                         () -> IntStream.rangeClosed(fieldEnum.getMinValue(), fieldEnum.getMaxValue()).
                                 mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
             }
 
             //single value, just value like 7
-            group = matcher.group(5);
-            if (group != null) {
-                int num = Integer.parseInt(cronField);
+            if (matcher.group(5) != null) {
+                final int num = Integer.parseInt(cronField);
                 if (num < fieldEnum.getMinValue() || num > fieldEnum.getMaxValue()) {
                     throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
                 }
