@@ -28,6 +28,7 @@ __________________________________________________________________________
 #### Build and run the jar
 
 This project uses Maven to build the target jar.
+ 
  Requirements:
    - Git(any version) must be installed and on the path.  
    - JDK(minimum 1.8) must be installed and on the path.
