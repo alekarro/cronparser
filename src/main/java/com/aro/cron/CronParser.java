@@ -19,6 +19,6 @@ public interface CronParser {
 
     String parseField(final String cronField, final int fieldIndexInCron) throws WrongCronException;
 
-    String getLabel(final int indexInCron) throws WrongCronException;
+    String getLabel(final int fieldIndexInCron) throws WrongCronException;
 
 }
