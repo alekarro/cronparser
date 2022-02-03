@@ -1,6 +1,6 @@
-package com.aro;
+package com.aro.cron.commandcron;
 
-public enum CronWithCommandFieldsEnum {
+public enum CommandCronEnum {
     MINUTE("minute", 0, 59),
     HOUR("hour", 0, 23),
     DAY_OF_MONTH("day of month", 1, 31),
@@ -8,11 +8,11 @@ public enum CronWithCommandFieldsEnum {
     DAY_OF_WEEK("day of week", 1, 7),
     COMMAND("command");
 
-    CronWithCommandFieldsEnum(String label) {
+    CommandCronEnum(String label) {
         this.label = label;
     }
 
-    CronWithCommandFieldsEnum(String label, int minValue, int maxValue) {
+    CommandCronEnum(String label, int minValue, int maxValue) {
         this.label = label;
         this.minValue = minValue;
         this.maxValue = maxValue;

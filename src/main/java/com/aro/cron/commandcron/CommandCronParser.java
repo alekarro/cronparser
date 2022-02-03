@@ -1,14 +1,13 @@
-package com.aro.service.impl;
+package com.aro.cron.commandcron;
 
-import com.aro.CronWithCommandFieldsEnum;
-import com.aro.WrongCronException;
-import com.aro.service.CronParserService;
+import com.aro.cron.WrongCronException;
+import com.aro.cron.CronParser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
-public class CronWithCommandParserServiceImpl implements CronParserService {
+public class CommandCronParser implements CronParser {
     private final static Pattern CRON_PATTERN = Pattern.compile("(\\d+,[\\d,]*)*(\\d+-\\d+)*([\\d*]+/\\d+)*([*]+)*(\\d+)*");
 
     private final static String SPACE = " ";
@@ -17,9 +16,24 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
     private final static String SLASH = "/";
     private final static String ASTERISK = "*";
 
-    public String parseField(final String cronField, CronWithCommandFieldsEnum fieldEnum) throws WrongCronException {
+    @Override
+    public String getLabel(int fieldIndexInCron) throws WrongCronException {
+        try {
+            return CommandCronEnum.values()[fieldIndexInCron].getLabel();
+        } catch (final IndexOutOfBoundsException e) {
+            throw new WrongCronException("WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, field index =" + fieldIndexInCron);
+        }
+    }
 
-        if (fieldEnum == CronWithCommandFieldsEnum.COMMAND) {
+    public String parseField(final String cronField, final int fieldIndexInCron) throws WrongCronException {
+        final CommandCronEnum fieldEnum;
+        try {
+            fieldEnum = CommandCronEnum.values()[fieldIndexInCron];
+        } catch (final IndexOutOfBoundsException e) {
+            throw new WrongCronException("WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, field index =" + fieldIndexInCron);
+        }
+
+        if (fieldEnum == CommandCronEnum.COMMAND) {
             return cronField;
         }
 
@@ -66,7 +80,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
         throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
     }
 
-    private String expandSlash(String cronField, CronWithCommandFieldsEnum fieldEnum, String group) throws WrongCronException {
+    private String expandSlash(String cronField, CommandCronEnum fieldEnum, String group) throws WrongCronException {
         String[] arr = group.split(SLASH);
         final int start;
         if (ASTERISK.equals(arr[0])) {
@@ -84,7 +98,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
                         mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
     }
 
-    private String expandDash(String cronField, CronWithCommandFieldsEnum fieldEnum, String group) throws WrongCronException {
+    private String expandDash(String cronField, CommandCronEnum fieldEnum, String group) throws WrongCronException {
         String[] arr = group.split(DASH);
         final int start = Integer.parseInt(arr[0]);
         final int end = Integer.parseInt(arr[1]);
@@ -96,7 +110,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
                 mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
     }
 
-    private String expandComma(String cronField, CronWithCommandFieldsEnum fieldEnum, String group) throws WrongCronException {
+    private String expandComma(String cronField, CommandCronEnum fieldEnum, String group) throws WrongCronException {
         final String result = group.replace(COMMA, SPACE);
         final String[] arr = result.split("\\s");
         for (String s : arr) {
@@ -113,7 +127,7 @@ public class CronWithCommandParserServiceImpl implements CronParserService {
         return result;
     }
 
-    private String createExceptionMessage(String cronField, CronWithCommandFieldsEnum fieldEnum) {
+    private String createExceptionMessage(String cronField, CommandCronEnum fieldEnum) {
         return "WrongCronException: cron is wrong, incorrect field value = " + cronField + "; field = " + fieldEnum.toString();
     }
 
