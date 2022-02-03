@@ -67,10 +67,8 @@ public class CommandCronParser implements CronParser {
 
             //single value, just value like 7
             if (matcher.group(5) != null) {
-                final int num = Integer.parseInt(cronField);
-                if (num < fieldEnum.getMinValue() || num > fieldEnum.getMaxValue()) {
-                    throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
-                }
+                final int val = Integer.parseInt(cronField);
+                validateValue(val, fieldEnum, cronField);
                 return cronField;
             }
         }
@@ -86,9 +84,9 @@ public class CommandCronParser implements CronParser {
         } else {
             start = Integer.parseInt(valuesArr[0]);
         }
-        if (start < fieldEnum.getMinValue() || start > fieldEnum.getMaxValue()) {
-            throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
-        }
+
+        validateValue(start, fieldEnum, cronField);
+
         final int step = Integer.parseInt(valuesArr[1]);
         return String.join(SPACE,
                 () -> IntStream.rangeClosed(start, fieldEnum.getMaxValue()).
@@ -100,9 +98,9 @@ public class CommandCronParser implements CronParser {
         final String[] valuesArr = group.split(DASH);
         final int start = Integer.parseInt(valuesArr[0]);
         final int end = Integer.parseInt(valuesArr[1]);
-        if (start < fieldEnum.getMinValue() || end > fieldEnum.getMaxValue()) {
-            throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
-        }
+
+        validateValue(start, fieldEnum, cronField);
+        validateValue(end, fieldEnum, cronField);
 
         return String.join(SPACE, () -> IntStream.rangeClosed(start, end).
                 mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
@@ -112,15 +110,13 @@ public class CommandCronParser implements CronParser {
         final String result = group.replace(COMMA, SPACE);
         final String[] valuesArr = result.split("\\s");
         for (String s : valuesArr) {
-            int num;
+            int val;
             try {
-                num = Integer.parseInt(s);
+                val = Integer.parseInt(s);
             } catch (NumberFormatException e) {
                 throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
             }
-            if (num < fieldEnum.getMinValue() || num > fieldEnum.getMaxValue()) {
-                throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
-            }
+            validateValue(val, fieldEnum, cronField);
         }
         return result;
     }
@@ -134,5 +130,9 @@ public class CommandCronParser implements CronParser {
                 "field index = " + fieldIndexInCron + "; max possible index = " + (CommandCronEnum.values().length - 1);
     }
 
-
+    private void validateValue(final int val, final CommandCronEnum fieldEnum, final String cronField) throws WrongCronException {
+        if (val < fieldEnum.getMinValue() || val > fieldEnum.getMaxValue()) {
+            throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
+        }
+    }
 }

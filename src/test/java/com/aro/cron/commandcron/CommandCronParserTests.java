@@ -97,7 +97,7 @@ public class CommandCronParserTests {
         WrongCronException exception = assertThrows(WrongCronException.class, () ->
                 service.getLabel(6)
         );
-        assertEquals("WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, field index =6", exception.getMessage());
+        assertEquals("WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, field index = 6; max possible index = 5", exception.getMessage());
     }
 
 }
