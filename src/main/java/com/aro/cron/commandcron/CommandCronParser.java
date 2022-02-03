@@ -21,7 +21,7 @@ public class CommandCronParser implements CronParser {
         try {
             return CommandCronEnum.values()[fieldIndexInCron].getLabel();
         } catch (final IndexOutOfBoundsException e) {
-            throw new WrongCronException("WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, field index =" + fieldIndexInCron);
+            throw new WrongCronException(createIndexOutOfBoundsExceptionMessage(fieldIndexInCron));
         }
     }
 
@@ -30,7 +30,7 @@ public class CommandCronParser implements CronParser {
         try {
             fieldEnum = CommandCronEnum.values()[fieldIndexInCron];
         } catch (final IndexOutOfBoundsException e) {
-            throw new WrongCronException("WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, field index =" + fieldIndexInCron);
+            throw new WrongCronException(createIndexOutOfBoundsExceptionMessage(fieldIndexInCron));
         }
 
         if (fieldEnum == CommandCronEnum.COMMAND) {
@@ -127,6 +127,11 @@ public class CommandCronParser implements CronParser {
 
     private String createExceptionMessage(String cronField, CommandCronEnum fieldEnum) {
         return "WrongCronException: cron is wrong, incorrect field value = " + cronField + "; field = " + fieldEnum.toString();
+    }
+
+    private String createIndexOutOfBoundsExceptionMessage(final int fieldIndexInCron) {
+        return "WrongCronException: cron is wrong, field index in cron exceeds maximum possible value, " +
+                "field index = " + fieldIndexInCron + "; max possible index = " + (CommandCronEnum.values().length - 1);
     }
 
 
