@@ -1,8 +1,6 @@
 package com.aro.cron.commandcron;
 
-import com.aro.cron.commandcron.CommandCronEnum;
 import com.aro.cron.WrongCronException;
-import com.aro.cron.commandcron.CommandCronParser;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package com.aro.cron.commandcron;
 
-import com.aro.cron.WrongCronException;
 import com.aro.cron.CronParser;
+import com.aro.cron.WrongCronException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,25 +40,25 @@ public class CommandCronParser implements CronParser {
         final Matcher matcher = CRON_PATTERN.matcher(cronField);
 
         if (matcher.find()) {
-            //numbers separated by commas
+            //numbers separated by commas, like 1,2,3,4
             String group = matcher.group(1);
             if (group != null) {
                 return expandComma(cronField, fieldEnum, group);
             }
 
-            //numbers separated by dash
+            //numbers separated by dash, like 1-15
             group = matcher.group(2);
             if (group != null) {
                 return expandDash(cronField, fieldEnum, group);
             }
 
-            //slash
+            //slash, like 0/15 or */15
             group = matcher.group(3);
             if (group != null) {
                 return expandSlash(cronField, fieldEnum, group);
             }
 
-            //asterisk
+            //asterisk, just *
             group = matcher.group(4);
             if (group != null) {
                 return String.join(SPACE,
@@ -66,7 +66,7 @@ public class CommandCronParser implements CronParser {
                                 mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
             }
 
-            //single value
+            //single value, just value like 7
             group = matcher.group(5);
             if (group != null) {
                 int num = Integer.parseInt(cronField);
@@ -81,17 +81,17 @@ public class CommandCronParser implements CronParser {
     }
 
     private String expandSlash(String cronField, CommandCronEnum fieldEnum, String group) throws WrongCronException {
-        String[] arr = group.split(SLASH);
+        final String[] valuesArr = group.split(SLASH);
         final int start;
-        if (ASTERISK.equals(arr[0])) {
+        if (ASTERISK.equals(valuesArr[0])) {
             start = fieldEnum.getMinValue();
         } else {
-            start = Integer.parseInt(arr[0]);
+            start = Integer.parseInt(valuesArr[0]);
         }
         if (start < fieldEnum.getMinValue() || start > fieldEnum.getMaxValue()) {
             throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
         }
-        final int step = Integer.parseInt(arr[1]);
+        final int step = Integer.parseInt(valuesArr[1]);
         return String.join(SPACE,
                 () -> IntStream.rangeClosed(start, fieldEnum.getMaxValue()).
                         filter(n -> (n - start) % step == 0).
@@ -99,9 +99,9 @@ public class CommandCronParser implements CronParser {
     }
 
     private String expandDash(String cronField, CommandCronEnum fieldEnum, String group) throws WrongCronException {
-        String[] arr = group.split(DASH);
-        final int start = Integer.parseInt(arr[0]);
-        final int end = Integer.parseInt(arr[1]);
+        final String[] valuesArr = group.split(DASH);
+        final int start = Integer.parseInt(valuesArr[0]);
+        final int end = Integer.parseInt(valuesArr[1]);
         if (start < fieldEnum.getMinValue() || end > fieldEnum.getMaxValue()) {
             throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
         }
@@ -112,8 +112,8 @@ public class CommandCronParser implements CronParser {
 
     private String expandComma(String cronField, CommandCronEnum fieldEnum, String group) throws WrongCronException {
         final String result = group.replace(COMMA, SPACE);
-        final String[] arr = result.split("\\s");
-        for (String s : arr) {
+        final String[] valuesArr = result.split("\\s");
+        for (String s : valuesArr) {
             int num;
             try {
                 num = Integer.parseInt(s);
