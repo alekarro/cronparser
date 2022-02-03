@@ -37,7 +37,7 @@ This project uses Maven to build the target jar.
 To build and run the jar from command line:
    1. clone project using following command    `git clone https://github.com/alerro/cronparser.git `
    2. in the root of this project, run command `mvn clean compile jar:jar`
-   3. in the root of this project, run jar using command `java -jar target/expandedcron-1.0.jar "*/15 17 1,3,15 7-12 * /usr/bin/find"`
+   3. in the root of this project, run jar using command `java -jar target/cronparser-1.0.jar "*/15 17 1,3,15 7-12 * /usr/bin/find"`
    
    where "*/15 17 1,3,15 7-12 * /usr/bin/find" is a parameter, cron expression
    
