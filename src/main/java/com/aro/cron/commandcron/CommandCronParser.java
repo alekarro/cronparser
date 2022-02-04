@@ -40,39 +40,43 @@ public class CommandCronParser implements CronParser {
         final Matcher matcher = CRON_PATTERN.matcher(cronField);
 
         if (matcher.find()) {
-            //numbers separated by commas, like 1,2,3,4
-            String group = matcher.group(1);
-            if (group != null) {
-                return expandComma(cronField, fieldEnum, group);
-            }
+            try {
+                //numbers separated by commas, like 1,2,3,4
+                String group = matcher.group(1);
+                if (group != null) {
+                    return expandComma(cronField, fieldEnum, group);
+                }
 
-            //numbers separated by dash, like 1-15
-            group = matcher.group(2);
-            if (group != null) {
-                return expandDash(cronField, fieldEnum, group);
-            }
+                //numbers separated by dash, like 1-15
+                group = matcher.group(2);
+                if (group != null) {
+                    return expandDash(cronField, fieldEnum, group);
+                }
 
-            //slash, like 0/15 or */15
-            group = matcher.group(3);
-            if (group != null) {
-                return expandSlash(cronField, fieldEnum, group);
-            }
+                //slash, like 0/15 or */15
+                group = matcher.group(3);
+                if (group != null) {
+                    return expandSlash(cronField, fieldEnum, group);
+                }
 
-            //asterisk, just *
-            if (matcher.group(4) != null) {
-                return String.join(SPACE,
-                        () -> IntStream.rangeClosed(fieldEnum.getMinValue(), fieldEnum.getMaxValue()).
-                                mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
-            }
+                //asterisk, just *
+                if (matcher.group(4) != null) {
+                    return String.join(SPACE,
+                            () -> IntStream.rangeClosed(fieldEnum.getMinValue(), fieldEnum.getMaxValue()).
+                                    mapToObj(x -> (CharSequence) String.valueOf(x)).iterator());
+                }
 
-            //single value, just value like 7
-            if (matcher.group(5) != null) {
-                final int val = Integer.parseInt(cronField);
-                validateValue(val, fieldEnum, cronField);
-                return cronField;
+                //single value, just value like 7
+                if (matcher.group(5) != null) {
+                    final int val = Integer.parseInt(cronField);
+                    validateValue(val, fieldEnum, cronField);
+                    return cronField;
+                }
+
+            } catch (RuntimeException e) {
+                throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
             }
         }
-
         throw new WrongCronException(createExceptionMessage(cronField, fieldEnum));
     }
 
