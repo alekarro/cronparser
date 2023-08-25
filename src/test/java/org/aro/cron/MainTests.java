@@ -1,6 +1,6 @@
-package com.aro.cron;
+package org.aro.cron;
 
-import com.aro.Main;
+import org.aro.Main;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

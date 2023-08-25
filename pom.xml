@@ -33,7 +33,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                com.aro.Main
+                                org.aro.Main
                             </mainClass>
                         </manifest>
                     </archive>

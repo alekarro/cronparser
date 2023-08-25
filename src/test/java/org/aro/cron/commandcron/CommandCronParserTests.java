@@ -1,6 +1,6 @@
-package com.aro.cron.commandcron;
+package org.aro.cron.commandcron;
 
-import com.aro.cron.WrongCronException;
+import org.aro.cron.WrongCronException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,9 +9,8 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class CommandCronParserTests {
+class CommandCronParserTests {
     private CommandCronParser service;
-
 
     @Before
     public void init() {

@@ -1,7 +1,7 @@
-package com.aro.cron.commandcron;
+package org.aro.cron.commandcron;
 
-import com.aro.cron.CronParser;
-import com.aro.cron.WrongCronException;
+import org.aro.cron.CronParser;
+import org.aro.cron.WrongCronException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package com.aro.cron.commandcron;
+package org.aro.cron.commandcron;
 
 public enum CommandCronEnum {
     MINUTE("minute", 0, 59),
@@ -18,7 +18,7 @@ public enum CommandCronEnum {
         this.maxValue = maxValue;
     }
 
-    private String label;
+    private final String label;
     private int minValue;
     private int maxValue;
 
@@ -37,9 +37,9 @@ public enum CommandCronEnum {
     @Override
     public String toString() {
         return "{" +
-            "label='" + label + '\'' +
-            ", minValue=" + minValue +
-            ", maxValue=" + maxValue +
-            '}';
+                "label='" + label + '\'' +
+                ", minValue=" + minValue +
+                ", maxValue=" + maxValue +
+                '}';
     }
 }

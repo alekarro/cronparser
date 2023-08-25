@@ -1,8 +1,8 @@
-package com.aro;
+package org.aro;
 
-import com.aro.cron.CronParser;
-import com.aro.cron.WrongCronException;
-import com.aro.cron.commandcron.CommandCronParser;
+import org.aro.cron.CronParser;
+import org.aro.cron.WrongCronException;
+import org.aro.cron.commandcron.CommandCronParser;
 
 public class Main {
     private final static int FIELD_NAME_COLUMN_SIZE = 14;
